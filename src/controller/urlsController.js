@@ -15,3 +15,10 @@ export async function shortenUrl (req,res){
 
     res.status(201).send({id:id, shortUrl: shortLink})
 }
+
+export async function getUrl(req, res){
+ const {id} =  req.params
+ const body = await db.query(`SELECT id,"shortUrl",url FROM urls WHERE id=${id}`)
+ if(body.rows.length == 0) return res.status(404).send("Not found")
+ res.status(200).send(body.rows[0])
+}

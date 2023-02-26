@@ -154,6 +154,7 @@ INSERT INTO public.sections VALUES (2, 2, '69d78dea-28f9-43c6-b2fe-d5bd8266f81a'
 --
 
 INSERT INTO public.urls VALUES (1, 'https://assa/sbjashbdjsadasdasd.com', 'FytAh2I0', 0, 2, '2023-02-26 20:07:18.441077');
+INSERT INTO public.urls VALUES (2, 'https://assa/sbjashbdjsadasdasd.com', 'Z92lbYMc', 0, 2, '2023-02-26 20:12:56.704625');
 
 
 --
@@ -177,7 +178,7 @@ SELECT pg_catalog.setval('public.sections_id_seq', 3, true);
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 1, true);
+SELECT pg_catalog.setval('public.urls_id_seq', 2, true);
 
 
 --
