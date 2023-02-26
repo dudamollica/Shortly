@@ -22,3 +22,12 @@ export async function getUrl(req, res){
  if(body.rows.length == 0) return res.status(404).send("Not found")
  res.status(200).send(body.rows[0])
 }
+
+export async function redirectUrl(req,res){
+ const {shortUrl} = req.params
+ const shortUrlExist = await db.query(`SELECT * FROM urls WHERE "shortUrl"='${shortUrl}'`)
+ if(shortUrlExist.rows.length == 0) return res.status(404).send("NOT FOUND")
+ await db.query(`UPDATE urls SET "visitCount" = "visitCount" + 1 WHERE "shortUrl"='${shortUrl}'`)
+ const url = shortUrlExist.rows[0].url
+ res.redirect(url);
+}
