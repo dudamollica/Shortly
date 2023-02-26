@@ -13,5 +13,5 @@ export async function shortenUrl (req,res){
     await db.query(`INSERT INTO urls (url, "shortUrl", "visitCount", user_id, "createdAt") VALUES 
     ('${url}', '${shortLink}', 0, ${id}, now())`)
 
-    res.status(200).send({id:id, shortUrl: shortLink})
+    res.status(201).send({id:id, shortUrl: shortLink})
 }

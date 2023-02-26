@@ -6,7 +6,7 @@ import validateSchema from "../middleware/validateSchema.js";
 
 const urlsRouter = Router();
 
-urlsRouter.post("/urls/shorten", validateSchema(urlSchema), authValidation, shortenUrl);
+urlsRouter.post("/urls/shorten", authValidation, validateSchema(urlSchema), shortenUrl);
 urlsRouter.get("/urls/:id");
 urlsRouter.get("/urls/open/:shortUrl");
 urlsRouter.delete("/urls/:id");
