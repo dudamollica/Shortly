@@ -21,6 +21,38 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: sections; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sections (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    token text NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: sections_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sections_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sections_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sections_id_seq OWNED BY public.sections.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -28,7 +60,8 @@ CREATE TABLE public.users (
     id integer NOT NULL,
     name character varying(100) NOT NULL,
     email character varying(100) NOT NULL,
-    password character varying(100) NOT NULL
+    password character varying(100) NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -53,6 +86,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: sections id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sections ALTER COLUMN id SET DEFAULT nextval('public.sections_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -60,17 +100,51 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Data for Name: sections; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO public.sections VALUES (3, 3, '3a2e5778-3763-48b3-b58e-8027cabe4818', '2023-02-26 18:08:40.540768');
+INSERT INTO public.sections VALUES (1, 1, 'e2ef4d4f-0e5e-49a2-8ff5-7e870411150f', '2023-02-26 18:06:09.368309');
+INSERT INTO public.sections VALUES (2, 2, '69d78dea-28f9-43c6-b2fe-d5bd8266f81a', '2023-02-26 18:06:32.906126');
+
+
+--
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (1, 'João', 'joao@driven.com.br', '$2b$10$rL.ZTxTzQFPurweRkC3gCe99UQ/wvPJHzQ6uWppG4D7OJpl0wiFOK');
+INSERT INTO public.users VALUES (1, 'joao', 'joao@driven.com.br', '$2b$10$uCdBXFuItH0LzSVYBGeJv.NwLVdZo46mM3drGpHAE0qhU/1hwV50G', '2023-02-26 17:56:34.37688');
+INSERT INTO public.users VALUES (2, 'maria', 'maria@driven.com.br', '$2b$10$nJKL2L.gmHDg8fYzydkSHubQS3YMMHng98MroXrsHYeYroMjYAt..', '2023-02-26 17:57:02.27734');
+INSERT INTO public.users VALUES (3, 'ana', 'ana@driven.com.br', '$2b$10$spwgqI1Y7k9EaV8wmfw8B.RukQ/qY32CvZB8c.yXqVz1XNb8s2MGO', '2023-02-26 18:04:18.347759');
+
+
+--
+-- Name: sections_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.sections_id_seq', 3, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+SELECT pg_catalog.setval('public.users_id_seq', 3, true);
+
+
+--
+-- Name: sections sections_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sections
+    ADD CONSTRAINT sections_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sections sections_token_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sections
+    ADD CONSTRAINT sections_token_key UNIQUE (token);
 
 
 --
@@ -87,6 +161,14 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sections sections_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sections
+    ADD CONSTRAINT sections_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
