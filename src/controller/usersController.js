@@ -12,7 +12,7 @@ export default async function userData(req,res){
     `
     )).rows[0]
 
-  const userUrls=  await db.query(`SELECT id, "shortUrl", url, "visitCount" FROM urls WHERE user_id = ${2}`);
+  const userUrls=  await db.query(`SELECT id, "shortUrl", url, "visitCount" FROM urls WHERE user_id = ${token}`);
 
   const body = {
         id: user.id,
