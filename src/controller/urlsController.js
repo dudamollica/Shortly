@@ -39,7 +39,7 @@ export async function deleteUrl(req,res){
     const idUrlOwner = await (await db.query(`SELECT user_id FROM urls WHERE id='${id}'`)).rows[0]
     
     if(!idUrlOwner) return res.status(404).send("This URL does not exist")
-    if(idUser != idUrlOwner) return res.status(401).send("This Url belongs to another user")
+    if(idUser != idUrlOwner.user_id) return res.status(401).send("This Url belongs to another user")
     
     await db.query(`DELETE FROM urls WHERE id=${id}`)
     res.status(204).send("Delete complete")
