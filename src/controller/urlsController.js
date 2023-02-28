@@ -31,3 +31,16 @@ export async function redirectUrl(req,res){
  const url = shortUrlExist.rows[0].url
  res.redirect(url);
 }
+
+export async function deleteUrl(req,res){
+    const token = res.locals.section
+    const {id} =  req.params
+    const idUser = await (await db.query(`SELECT user_id FROM sections WHERE token='${token}'`)).rows[0].user_id
+    const idUrlOwner = await (await db.query(`SELECT user_id FROM urls WHERE id='${id}'`)).rows[0].user_id
+    
+    if(!idUrlOwner) return res.status(404).send("This URL does not exist")
+    if(idUser != idUrlOwner) return res.status(401).send("This Url belongs to another user")
+    
+    await db.query(`DELETE FROM urls WHERE id=${id}`)
+    res.status(204).send("Delete complete")
+}

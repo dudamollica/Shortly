@@ -1,6 +1,6 @@
 import db from "../config/database.js";
 
-export default async function userData(req,res){
+export async function userData(req,res){
     const token = res.locals.section
     const user = await (await db.query(
     `SELECT users.id, users.name, SUM(urls."visitCount") AS total_visits
@@ -22,4 +22,8 @@ export default async function userData(req,res){
     }
    
     res.status(200).send(body)
+}
+
+export async function ranking (req,res){
+
 }
